@@ -7,6 +7,7 @@ use Illuminate\Routing\RouteGroup;
 
 use App\Http\Controllers\AlmacenController;
 use App\Http\Controllers\ReporteProductoController;
+use App\Livewire\SociosNegocio\Proveedores;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -74,9 +75,10 @@ Route::middleware([
     Route::get('/cliente', function () {
         return view('modulos.socios_negocio.clientes');
     })->name('cliente');
-    Route::get('/proveedor', function () {
-        return view('modulos.socios_negocio.proveedores');
-    })->name('proveedor');
+        Route::get('/proveedor', function () {return view('modulos.socios_negocio.proveedores'); })->name('proveedor');
+//    Route::get('/socios-negocio/proveedores', \App\Livewire\SociosNegocio\Proveedores::class)->name('proveedores.index');
+
+
     /// configuracion
     Route::get('/empresa', function () {
         return view('modulos.configuracion.empresa');
