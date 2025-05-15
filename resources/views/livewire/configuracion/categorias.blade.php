@@ -32,7 +32,8 @@
                             </div>
                             <div class="nk-int-st">
                                 <input wire:model="nom_categoria" type="text" class="form-control"
-                                    placeholder="Nombre de Categoría">
+                                    placeholder="Nombre de Categoría"
+                                    style="position: relative; z-index: 9999; background: #fff;">
                                 @error('nom_categoria')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror

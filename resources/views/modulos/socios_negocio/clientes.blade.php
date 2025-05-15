@@ -1,9 +1,7 @@
 <x-home-layout>
     <x-slot name="header">
-        <h1>Página principal</h1>
+        <h1>Gestión de Proveedores</h1>
     </x-slot>
 
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <h1>Clientes </h1>
-    </div>
+    <livewire:socios-negocio.clientes />
 </x-home-layout>

@@ -22,7 +22,6 @@
             </button>
         @endif
 
-
         @if ($crearFormulario)
             <form wire:submit.prevent="{{ $modoEdicion ? 'actualizar' : 'guardar' }}">
                 <div class="row">
@@ -32,8 +31,8 @@
                                 <i class="notika-icon notika-house"></i>
                             </div>
                             <div class="nk-int-st">
-                                <input wire:model="nom_almacen" type="text" class="form-control"
-                                    placeholder="Nombre del Almacén">
+                                <input wire:model="nom_almacen" type="text" class="form-control" placeholder="Nombre del Almacén" 
+                                style="position: relative; z-index: 9999; background: #fff;">
                                 @error('nom_almacen')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -47,8 +46,8 @@
                                 <i class="notika-icon notika-map"></i>
                             </div>
                             <div class="nk-int-st">
-                                <input wire:model="direccion_almacen" type="text" class="form-control"
-                                    placeholder="Dirección del Almacén">
+                                <input wire:model="direccion_almacen" type="text" class="form-control" placeholder="Dirección del Almacén"
+                                style="position: relative; z-index: 9999; background: #fff;">
                                 @error('direccion_almacen')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
