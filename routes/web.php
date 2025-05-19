@@ -7,8 +7,11 @@ use Illuminate\Routing\RouteGroup;
 
 use App\Http\Controllers\AlmacenController;
 use App\Http\Controllers\ReporteProductoController;
+use App\Http\Controllers\PedidoController;
 use App\Livewire\SociosNegocio\Proveedores;
 use App\Livewire\SociosNegocio\Clientes;
+use App\Livewire\Ventas\Pedidos;
+
 
 Route::get('/', function () {
     return view('auth.login');
@@ -46,9 +49,16 @@ Route::middleware([
     'verified',
 ])->group(function () {
     /// Ventas
+
+    /*
     Route::get('/pedidos', function () {
         return view('modulos.ventas.pedidos');
     })->name('pedidos');
+*/
+    Route::view('/ventas/pedidos', 'modulos.ventas.pedidos')->name('pedidos.index');
+    Route::get('/ventas/pedidos/pdf/{id}', [PedidoController::class, 'generarPDF'])->name('pedidos.pdf');
+
+
     Route::get('/reporte_ventas', function () {
         return view('modulos.ventas.reporte_ventas');
     })->name('reporte_ventas');
@@ -73,10 +83,14 @@ Route::middleware([
     //     Route::get('/reporte_productos', function () { return view('modulos.inventario.reporte_productos'); })->name('reporte_productos');
 
     /// clientes/proveedores
-    Route::get('/cliente', function () { return view('modulos.socios_negocio.clientes'); })->name('cliente');
-//    Route::get('/socios-negocio/clientes', Clientes::class)->name('clientes.index');
-    Route::get('/proveedor', function () {return view('modulos.socios_negocio.proveedores'); })->name('proveedor');
-//    Route::get('/socios-negocio/proveedores', \App\Livewire\SociosNegocio\Proveedores::class)->name('proveedores.index');
+    Route::get('/cliente', function () {
+        return view('modulos.socios_negocio.clientes');
+    })->name('cliente');
+    //    Route::get('/socios-negocio/clientes', Clientes::class)->name('clientes.index');
+    Route::get('/proveedor', function () {
+        return view('modulos.socios_negocio.proveedores');
+    })->name('proveedor');
+    //    Route::get('/socios-negocio/proveedores', \App\Livewire\SociosNegocio\Proveedores::class)->name('proveedores.index');
 
 
     /// configuracion

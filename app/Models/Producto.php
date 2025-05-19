@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Producto extends Model
 {
-    //
     protected $fillable = ['nom_producto', 'codigo_venta', 'categoria_id'];
 
-    public function categoria()
+    public function listasPrecio()
     {
-        return $this->belongsTo(Categoria::class);
+        return $this->belongsToMany(ListaPrecio::class, 'lista_precios_productos')
+            ->withPivot('precio')
+            ->withTimestamps();
     }
-
 }
