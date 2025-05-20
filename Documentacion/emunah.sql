@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-05-2025 a las 22:33:56
+-- Tiempo de generación: 20-05-2025 a las 23:13:04
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -257,6 +257,43 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `guia_ingresos`
+--
+
+CREATE TABLE `guia_ingresos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `descripcion_ingreso` varchar(255) DEFAULT NULL,
+  `fecha_pedido` date NOT NULL,
+  `fecha_ingreso` date NOT NULL,
+  `estado_ingreso` enum('Pendiente','Completado','Anulado') NOT NULL DEFAULT 'Pendiente',
+  `total_ingreso` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `descuento_ingreso` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `comentario` text DEFAULT NULL,
+  `proveedor_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `guia_ingreso_detalles`
+--
+
+CREATE TABLE `guia_ingreso_detalles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `guia_ingreso_id` bigint(20) UNSIGNED NOT NULL,
+  `producto_id` bigint(20) UNSIGNED NOT NULL,
+  `precio_unitario` decimal(10,2) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio_total` decimal(10,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `jobs`
 --
 
@@ -407,7 +444,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (26, '2025_05_18_035315_create_pedidos_table', 8),
 (27, '2025_05_18_035316_create_pedido_productos_table', 8),
 (28, '2025_05_18_035314_create_lista_precios_productos_table', 9),
-(31, '2025_05_20_134827_create_empresas_table', 10);
+(31, '2025_05_20_134827_create_empresas_table', 10),
+(32, '2025_05_20_205239_create_guia_ingresos_table', 11),
+(33, '2025_05_20_205315_create_guia_ingreso_detalles_table', 11);
 
 -- --------------------------------------------------------
 
@@ -715,7 +754,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('TUsLDaIZlf6WY8ZjgYvALPqGWAiy06ar3Iofo7rd', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiUlRaeHZmWFpJZG9XdGp1aVh3SHNVYVQwc1BZNDJydnZNSzcyTm01ciI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly9jb3N0ZW9zLmNvbS92ZW50YXMvcGVkaWRvcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTIkbEN0cFBRTy4vRU1XTDE4Y3o4c1BxZS8zLmh4Lk9GZkhVNVZwWGFtUmZlamtYNzhrZ1J6Vy4iO30=', 1747771030);
+('TUsLDaIZlf6WY8ZjgYvALPqGWAiy06ar3Iofo7rd', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiUlRaeHZmWFpJZG9XdGp1aVh3SHNVYVQwc1BZNDJydnZNSzcyTm01ciI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly9jb3N0ZW9zLmNvbS9jb21wcmFzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MTp7aTowO3M6NToiZXJyb3IiO31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTIkbEN0cFBRTy4vRU1XTDE4Y3o4c1BxZS8zLmh4Lk9GZkhVNVZwWGFtUmZlamtYNzhrZ1J6Vy4iO30=', 1747775424);
 
 -- --------------------------------------------------------
 
@@ -801,6 +840,21 @@ ALTER TABLE `empresas`
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indices de la tabla `guia_ingresos`
+--
+ALTER TABLE `guia_ingresos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `guia_ingresos_proveedor_id_foreign` (`proveedor_id`);
+
+--
+-- Indices de la tabla `guia_ingreso_detalles`
+--
+ALTER TABLE `guia_ingreso_detalles`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `guia_ingreso_detalles_guia_ingreso_id_foreign` (`guia_ingreso_id`),
+  ADD KEY `guia_ingreso_detalles_producto_id_foreign` (`producto_id`);
 
 --
 -- Indices de la tabla `jobs`
@@ -969,6 +1023,18 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `guia_ingresos`
+--
+ALTER TABLE `guia_ingresos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `guia_ingreso_detalles`
+--
+ALTER TABLE `guia_ingreso_detalles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `jobs`
 --
 ALTER TABLE `jobs`
@@ -990,7 +1056,7 @@ ALTER TABLE `lista_precios_productos`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
@@ -1050,6 +1116,19 @@ ALTER TABLE `users`
 ALTER TABLE `almacen_productos`
   ADD CONSTRAINT `almacen_productos_almacen_id_foreign` FOREIGN KEY (`almacen_id`) REFERENCES `almacenes` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `almacen_productos_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `guia_ingresos`
+--
+ALTER TABLE `guia_ingresos`
+  ADD CONSTRAINT `guia_ingresos_proveedor_id_foreign` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `guia_ingreso_detalles`
+--
+ALTER TABLE `guia_ingreso_detalles`
+  ADD CONSTRAINT `guia_ingreso_detalles_guia_ingreso_id_foreign` FOREIGN KEY (`guia_ingreso_id`) REFERENCES `guia_ingresos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `guia_ingreso_detalles_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `lista_precios_productos`
