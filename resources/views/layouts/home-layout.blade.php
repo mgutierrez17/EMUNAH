@@ -54,8 +54,12 @@
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="logo-area" style="background-color: #1f2937; padding: 10px;">
-                        <a href="{{ route('home') }}"><img src="{{ asset('img/logo/Logo1_Emunah.png') }}" alt=""
-                                width="120" height="auto" /></a>
+                        <a href="{{ route('home') }}">@if ($empresa && $empresa->logo)
+                            <img src="{{ asset('storage/' . $empresa->logo) }}" alt="Logo" width="120" height="auto" />
+                            @else
+                            <img src="{{ asset('img/logo/default.png') }}" alt="Logo por defecto" width="120" height="auto" />
+                            @endif
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
