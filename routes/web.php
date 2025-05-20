@@ -120,3 +120,7 @@ Route::middleware([
         return view('index');
     })->name('home');
 });
+
+Route::get('/configuracion/empresa', function () {
+    return view('modulos.configuracion.empresa');
+})->middleware(['auth']);
