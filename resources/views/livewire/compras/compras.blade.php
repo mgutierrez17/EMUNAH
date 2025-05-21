@@ -18,51 +18,81 @@
     @if ($modoFormulario)
     <form wire:submit.prevent="guardarGuiaIngreso">
         <div class="row">
+            <!-- Descripción -->
             <div class="col-md-6">
                 <label>Descripción:</label>
-                <input type="text" class="form-control" wire:model="descripcion_ingreso" {{ $modoLectura ? 'readonly' : '' }}>
+                @if ($modoLectura)
+                <p class="form-control-static">{{ $descripcion_ingreso }}</p>
+                @else
+                <input type="text" class="form-control" wire:model="descripcion_ingreso">
+                @endif
             </div>
 
+            <!-- Fecha Pedido -->
             <div class="col-md-3">
                 <label>Fecha Pedido:</label>
-                <input type="date" class="form-control" wire:model="fecha_pedido" {{ $modoLectura ? 'readonly' : '' }}>
+                @if ($modoLectura)
+                <p class="form-control-static">{{ $fecha_pedido }}</p>
+                @else
+                <input type="date" class="form-control" wire:model="fecha_pedido">
+                @endif
             </div>
 
+            <!-- Fecha Ingreso -->
             <div class="col-md-3">
                 <label>Fecha Ingreso:</label>
-                <input type="date" class="form-control" wire:model="fecha_ingreso" {{ $modoLectura ? 'readonly' : '' }}>
+                @if ($modoLectura)
+                <p class="form-control-static">{{ $fecha_ingreso }}</p>
+                @else
+                <input type="date" class="form-control" wire:model="fecha_ingreso">
+                @endif
             </div>
 
+            <!-- Proveedor -->
             <div class="col-md-6 mt-3">
                 <label>Proveedor:</label>
-                <select class="form-control" wire:model="proveedor_id" {{ $modoLectura ? 'readonly' : '' }}>
+                @if ($modoLectura)
+                <p class="form-control-static">
+                    {{ optional($proveedores->find($proveedor_id))->nom_proveedor }}
+                </p>
+                @else
+                <select class="form-control" wire:model="proveedor_id">
                     <option value="">-- Seleccione --</option>
-                    @foreach ($proveedores as $proveedor)
+                    @foreach($proveedores as $proveedor)
                     <option value="{{ $proveedor->id }}">{{ $proveedor->nom_proveedor }}</option>
                     @endforeach
                 </select>
+                @endif
             </div>
-
             <div class="col-md-6 mt-3">
                 <label>Estado:</label>
-                <select wire:model="estado_ingreso" class="form-control" {{ $modoLectura ? 'readonly' : '' }}>
+                @if ($modoLectura)
+                <p class="form-control-static">
+                    <span class="label 
+                {{ $estado_ingreso === 'Pendiente' ? 'label-warning' : 
+                   ($estado_ingreso === 'Completado' ? 'label-success' : 'label-danger') }}">
+                        {{ ucfirst($estado_ingreso) }}
+                    </span>
+                </p>
+                @else
+                <select wire:model="estado_ingreso" class="form-control">
                     <option value="Pendiente">Pendiente</option>
                     <option value="Completado">Completado</option>
                     <option value="Anulado">Anulado</option>
                 </select>
-
+                @endif
             </div>
-
             <div class="col-md-12 mt-3">
                 <label>Comentario:</label>
+                @if ($modoLectura)
+                <p class="form-control-static">{{ $comentario }}</p>
+                @else
                 <textarea wire:model="comentario" class="form-control" {{ $modoLectura ? 'readonly' : '' }}></textarea>
+                @endif
             </div>
         </div>
-
         <hr>
-
         <h4>Detalle de productos</h4>
-
         <div class="table-responsive">
             <table class="table table-bordered mt-2">
                 <thead>
@@ -78,17 +108,26 @@
                     @foreach ($detalles as $index => $detalle)
                     <tr>
                         <td>
-                            <select class="form-control" wire:model="detalles.{{ $index }}.producto_id" {{ $modoLectura ? 'readonly' : '' }}>
+                            @if ($modoLectura)
+                            {{ optional($productos->find($detalle['producto_id']))->nom_producto }}
+                            @else
+                            <select class="form-control" wire:model="detalles.{{ $index }}.producto_id">
                                 <option value="">-- Seleccione --</option>
-                                @foreach ($productos as $producto)
+                                @foreach($productos as $producto)
                                 <option value="{{ $producto->id }}">{{ $producto->nom_producto }}</option>
                                 @endforeach
                             </select>
+                            @endif
                         </td>
+
                         <td>
-                            <input type="number" step="0.01" class="form-control"
-                                wire:model.lazy="detalles.{{ $index }}.precio_unitario" {{ $modoLectura ? 'readonly' : '' }}>
+                            @if ($modoLectura)
+                            {{ number_format($detalle['precio_unitario'], 2) }}
+                            @else
+                            <input type="number" step="0.01" class="form-control" wire:model="detalles.{{ $index }}.precio_unitario">
+                            @endif
                         </td>
+
                         <td>
                             <input type="number" class="form-control"
                                 wire:model.lazy="detalles.{{ $index }}.cantidad" {{ $modoLectura ? 'readonly' : '' }}>
@@ -107,8 +146,9 @@
             </table>
         </div>
 
+        @if (!$modoLectura)
         <button type="button" class="btn btn-secondary" wire:click="agregarDetalle">Agregar Producto</button>
-
+        @endif
         <div class="mt-3 row">
             <div class="col-md-4">
                 <label>Descuento:</label>
