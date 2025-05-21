@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-05-2025 a las 23:13:04
+-- Tiempo de generación: 21-05-2025 a las 13:16:55
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `costeos1`
+-- Base de datos: `emunah_com`
 --
 
 -- --------------------------------------------------------
@@ -128,10 +128,10 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('emunah_srl_cache_356a192b7913b04c54574d18c28d46e6395428ab', 'i:2;', 1747770986),
-('emunah_srl_cache_356a192b7913b04c54574d18c28d46e6395428ab:timer', 'i:1747770986;', 1747770986),
-('emunah_srl_cache_83dacac86f5ee86c0d26477f8925853d', 'i:1;', 1747751820),
-('emunah_srl_cache_83dacac86f5ee86c0d26477f8925853d:timer', 'i:1747751820;', 1747751820);
+('emunah_srl_cache_356a192b7913b04c54574d18c28d46e6395428ab', 'i:1;', 1747789233),
+('emunah_srl_cache_356a192b7913b04c54574d18c28d46e6395428ab:timer', 'i:1747789233;', 1747789233),
+('emunah_srl_cache_83dacac86f5ee86c0d26477f8925853d', 'i:1;', 1747789139),
+('emunah_srl_cache_83dacac86f5ee86c0d26477f8925853d:timer', 'i:1747789139;', 1747789139);
 
 -- --------------------------------------------------------
 
@@ -236,7 +236,7 @@ CREATE TABLE `empresas` (
 --
 
 INSERT INTO `empresas` (`id`, `nombre`, `telefono`, `direccion`, `correo`, `nit`, `logo`, `created_at`, `updated_at`) VALUES
-(5, 'Emunah SRL', '1123', 'aq', 'a@gmail.com', '123456789', 'logo/SOhFfJUSRNohFhoiHSRYYuXdoWNmh3hIQIvpFX8e.png', '2025-05-20 23:14:01', '2025-05-20 23:55:43');
+(5, 'Emunah SRL', '1123', 'aqfff', 'a@gmail.com', '123456789', 'logo/ZLHe6Edano6KdqiqYatEjLyFXRf1DXPezktBousk.png', '2025-05-20 23:14:01', '2025-05-21 04:59:35');
 
 -- --------------------------------------------------------
 
@@ -274,6 +274,19 @@ CREATE TABLE `guia_ingresos` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `guia_ingresos`
+--
+
+INSERT INTO `guia_ingresos` (`id`, `descripcion_ingreso`, `fecha_pedido`, `fecha_ingreso`, `estado_ingreso`, `total_ingreso`, `descuento_ingreso`, `comentario`, `proveedor_id`, `created_at`, `updated_at`) VALUES
+(1, 'aaaaaaaaa', '2025-05-21', '2025-05-21', 'Pendiente', 11000.00, 0.00, NULL, 2, '2025-05-21 07:05:25', '2025-05-21 07:05:25'),
+(2, 'bbbbbb', '2025-05-21', '2025-05-21', 'Pendiente', 1000.00, 0.00, NULL, 7, '2025-05-21 07:20:57', '2025-05-21 07:20:57'),
+(3, 'ccccccc', '2025-05-21', '2025-05-21', 'Pendiente', 1500.00, 0.00, NULL, 2, '2025-05-21 07:39:54', '2025-05-21 07:39:54'),
+(6, 'qqqqqqqaaaaaaaa', '2025-05-23', '2025-05-30', 'Pendiente', 10700.00, 50.00, NULL, 5, '2025-05-21 07:42:31', '2025-05-21 08:00:55'),
+(9, 'rrrrrrrr', '2025-05-21', '2025-05-30', 'Pendiente', 1000.00, 0.00, NULL, 1, '2025-05-21 08:01:53', '2025-05-21 08:01:53'),
+(10, 'aaaaaaaa', '2025-05-21', '2025-05-21', 'Anulado', 1200.00, 0.00, 'dddddddddddddd', 9, '2025-05-21 08:13:59', '2025-05-21 08:20:07'),
+(11, 'aaaaaaaa', '2025-05-21', '2025-05-21', 'Completado', 1200.00, 0.00, 'dddddddddddddd', 9, '2025-05-21 08:19:58', '2025-05-21 08:19:58');
+
 -- --------------------------------------------------------
 
 --
@@ -290,6 +303,21 @@ CREATE TABLE `guia_ingreso_detalles` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `guia_ingreso_detalles`
+--
+
+INSERT INTO `guia_ingreso_detalles` (`id`, `guia_ingreso_id`, `producto_id`, `precio_unitario`, `cantidad`, `precio_total`, `created_at`, `updated_at`) VALUES
+(1, 1, 14, 10.00, 1100, 11000.00, '2025-05-21 07:05:25', '2025-05-21 07:05:25'),
+(2, 2, 12, 10.00, 100, 1000.00, '2025-05-21 07:20:57', '2025-05-21 07:20:57'),
+(3, 3, 14, 150.00, 10, 1500.00, '2025-05-21 07:39:54', '2025-05-21 07:39:54'),
+(17, 6, 20, 10.00, 1000, 10000.00, '2025-05-21 08:00:55', '2025-05-21 08:00:55'),
+(18, 6, 14, 15.00, 50, 750.00, '2025-05-21 08:00:55', '2025-05-21 08:00:55'),
+(29, 9, 1, 10.00, 50, 500.00, '2025-05-21 08:13:31', '2025-05-21 08:13:31'),
+(30, 9, 2, 5.00, 100, 500.00, '2025-05-21 08:13:31', '2025-05-21 08:13:31'),
+(34, 11, 13, 12.00, 100, 1200.00, '2025-05-21 08:19:58', '2025-05-21 08:19:58'),
+(35, 10, 13, 12.00, 100, 1200.00, '2025-05-21 08:20:07', '2025-05-21 08:20:07');
 
 -- --------------------------------------------------------
 
@@ -754,7 +782,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('TUsLDaIZlf6WY8ZjgYvALPqGWAiy06ar3Iofo7rd', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiUlRaeHZmWFpJZG9XdGp1aVh3SHNVYVQwc1BZNDJydnZNSzcyTm01ciI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly9jb3N0ZW9zLmNvbS9jb21wcmFzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MTp7aTowO3M6NToiZXJyb3IiO31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTIkbEN0cFBRTy4vRU1XTDE4Y3o4c1BxZS8zLmh4Lk9GZkhVNVZwWGFtUmZlamtYNzhrZ1J6Vy4iO30=', 1747775424);
+('J8LCZsjYxVoyGJxjHnRhCKU34rlInFsBAexr6EZf', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiVTRia0xzblRZZmdrNU9uUVVPU2RzSzBVVUVwNkJqdlh5cXpaZll0ZCI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjI1OiJodHRwOi8vZW11bmFoLmNvbS9jb21wcmFzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MTp7aTowO3M6Nzoic3VjY2VzcyI7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMiRsQ3RwUFFPLi9FTVdMMThjejhzUHFlLzMuaHguT0ZmSFU1VnBYYW1SZmVqa1g3OGtnUnpXLiI7fQ==', 1747801207);
 
 -- --------------------------------------------------------
 
@@ -1026,13 +1054,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `guia_ingresos`
 --
 ALTER TABLE `guia_ingresos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `guia_ingreso_detalles`
 --
 ALTER TABLE `guia_ingreso_detalles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
