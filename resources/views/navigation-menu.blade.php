@@ -15,18 +15,6 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link href="" :active="request()->routeIs('Ventas')">
-                        Ventas
-                    </x-nav-link>
-                    <x-nav-link href="" :active="request()->routeIs('Ventas')">
-                        Compras
-                    </x-nav-link>
-                    <x-nav-link href="" :active="request()->routeIs('Ventas')">
-                        Inventario
-                    </x-nav-link>
-                    <x-nav-link href="" :active="request()->routeIs('Ventas')">
-                        Reportes
-                    </x-nav-link>
                 </div>
             </div>
 
@@ -189,7 +177,7 @@
 
                     <x-responsive-nav-link href="{{ route('logout') }}"
                                    @click.prevent="$root.submit();">
-                        {{ __('Log Out') }}aaaa
+                        {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
 

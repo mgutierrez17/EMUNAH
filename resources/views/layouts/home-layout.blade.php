@@ -42,6 +42,10 @@
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
     <!-- modernizr JS  ============================================ -->
     <script src="{{ asset('js/vendor/modernizr-2.8.3.min.js') }}"></script>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
+
 </head>
 
 <body>
@@ -64,37 +68,25 @@
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                     <div class="header-top-menu">
-                        <ul class="nav navbar-nav notika-top-nav">
-                            <li class="nav-item dropdown">
-                                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
-                                    class="nav-link dropdown-toggle"><span>{{ Auth::user()->name }}</i></span></a>
-                                <div role="menu" class="dropdown-menu message-dd animated zoomIn">
-                                    <div class="hd-message-info">
-                                        <a href="#">
-                                            <div class="hd-message-sn">
-                                                <div class="hd-message-img">
-                                                    <img src="{{ asset('img/post/1.jpg') }}" alt="{{ route('profile.show') }}" />
-                                                </div>
-                                                <div class="hd-mg-ctn">
-                                                    <h2><a href="{{ route('profile.show') }}">{{ __('Perfil') }}</a>
-                                                    </h2>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="hd-mg-va">
-                                        <a href="#"
-                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            <i class="fa fa-sign-out"></i> Cerrar sesión
-                                        </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                            style="display: none;">
+                        <div class="flex items-center justify-end h-16">
+                            <!-- Profile dropdown -->
+                            <div class="ml-3 relative">
+                                <div class="dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                                        {{ Auth::user()->name }}
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="{{ route('profile.show') }}">Perfil</a>
+
+                                        <form method="POST" action="{{ route('logout') }}">
                                             @csrf
+                                            <button type="submit" class="dropdown-item">Cerrar sesión</button>
                                         </form>
                                     </div>
                                 </div>
-                            </li>
-                        </ul>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
