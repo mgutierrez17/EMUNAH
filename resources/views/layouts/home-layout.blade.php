@@ -109,38 +109,37 @@
                     <div class="mobile-menu">
                         <nav id="dropdown">
                             <ul class="mobile-menu-nav">
-                                <li><a data-toggle="collapse" data-target="#Charts" href="#">Home</a>
+                                <li><a data-toggle="collapse" data-target="#Charts" href="{{ route('home') }}">Principal</a>
                                 </li>
-                                <li><a data-toggle="collapse" data-target="#demoevent" href="#">Email</a>
+                                <li><a data-toggle="collapse" data-target="#demoevent" href="#">Ventas</a>
                                     <ul id="demoevent" class="collapse dropdown-header-top">
-                                        <li><a href="inbox.html">Inbox</a></li>
-                                        <li><a href="view-email.html">View Email</a></li>
-                                        <li><a href="compose-email.html">Compose Email</a></li>
+                                        <li><a href="{{ route('pedidos.index') }}">Pedidos de Cliente</a></li>
+                                        <li><a href="{{ route('reporte_ventas') }}">Reporte de Ventas</a></li>
                                     </ul>
                                 </li>
-                                <li><a data-toggle="collapse" data-target="#democrou" href="#">Interface</a>
+                                <li><a data-toggle="collapse" data-target="#democrou" href="#">Compras</a>
                                     <ul id="democrou" class="collapse dropdown-header-top">
-                                        <li><a href="animations.html">Animations</a></li>
-                                        <li><a href="google-map.html">Google Map</a></li>
-                                        <li><a href="data-map.html">Data Maps</a></li>
-                                        <li><a href="code-editor.html">Code Editor</a></li>
-                                        <li><a href="image-cropper.html">Images Cropper</a></li>
-                                        <li><a href="wizard.html">Wizard</a></li>
+                                        <li><a href="{{ route('compras') }}">Compras Proveedor</a></li>
+                                        <li><a href="{{ route('reporte_compras') }}">Reporte de Compras</a></li>
                                     </ul>
                                 </li>
-                                <li><a data-toggle="collapse" data-target="#demolibra" href="#">Charts</a>
+                                <li><a data-toggle="collapse" data-target="#demolibra" href="#">Inventario</a>
                                     <ul id="demolibra" class="collapse dropdown-header-top">
-                                        <li><a href="flot-charts.html">Flot Charts</a></li>
-                                        <li><a href="bar-charts.html">Bar Charts</a></li>
-                                        <li><a href="line-charts.html">Line Charts</a></li>
-                                        <li><a href="area-charts.html">Area Charts</a></li>
+                                        <li><a href="{{ route('productos') }}">Productos</a></li>
+                                        <li><a href="{{ route('reporte.productos') }}">Reporte de Productos</a></li>
                                     </ul>
                                 </li>
-                                <li><a data-toggle="collapse" data-target="#demodepart" href="#">Tables</a>
+                                <li><a data-toggle="collapse" data-target="#demodepart" href="#">Clientes/Proveedores</a>
                                     <ul id="demodepart" class="collapse dropdown-header-top">
-                                        <li><a href="normal-table.html">Normal Table</a></li>
-                                        <li><a href="data-table.html">Data Table</a></li>
+                                        <li><a href="{{ route('cliente') }}">Clientes</a></li>
+                                        <li><a href="{{ route('proveedor') }}">Proveedores</a></li>
                                     </ul>
+                                </li>
+                                <li><a data-toggle="collapse" data-target="#Charts" href="#">Configuracion</a>
+                                    <ul id="demodepart" class="collapse dropdown-header-top">
+                                        <li><a href="{{ route('empresa') }}">Empresa</a></li>
+                                        <li><a href="{{ route('categorias_productos') }}">Categorias de Productos</a></li>
+                                        <li><a href="{{ route('almacenes') }}">Almacenes</a></li>
                                 </li>
                             </ul>
                         </nav>
@@ -157,7 +156,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <ul class="nav nav-tabs notika-menu-wrap menu-it-icon-pro">
                         <li class="active"><a href="{{ route('home') }}"><i
-                                    class="notika-icon notika-house"></i>Home</a>
+                                    class="notika-icon notika-house"></i>Principal</a>
                         </li>
                         <li><a data-toggle="tab" href="#ventas"><i class="notika-icon notika-promos"></i> Ventas</a>
                         </li>
