@@ -100,6 +100,7 @@ class Compras extends Component
                 ]);
                 // Eliminar detalles anteriores
                 $guia->detalles()->delete();
+                session()->flash('success', 'Guía de ingreso actualizada correctamente.');
             } else {
                 $guia = GuiaIngreso::create([
                     'descripcion_ingreso' => $this->descripcion_ingreso,
@@ -111,6 +112,7 @@ class Compras extends Component
                     'descuento_ingreso' => $this->descuento_ingreso,
                     'proveedor_id' => $this->proveedor_id,
                 ]);
+                session()->flash('success', 'Guía de ingreso registrada correctamente.');
             }
 
 
@@ -129,7 +131,7 @@ class Compras extends Component
             $this->resetForm();
             $this->modoFormulario = false;
             $this->ingresos = GuiaIngreso::with('proveedor')->orderBy('id', 'desc')->get();
-            session()->flash('success', 'Guía de ingreso registrada correctamente.');
+            //session()->flash('success', 'Guía de ingreso registrada correctamente.');
         } catch (\Exception $e) {
             DB::rollBack();
             session()->flash('error', 'Error al guardar: ' . $e->getMessage());
