@@ -1,0 +1,37 @@
+@startuml
+node "Inicio" {
+}
+
+node "Login" {
+}
+
+node "Olvidó su contraseña" {
+}
+
+node "Menú Principal" {
+}
+
+package "Gestión de Usuarios" {
+  node "Crear Usuario"
+  node "Editar Usuario"
+  node "Eliminar Usuario"
+}
+
+package "Gestión de Roles" {
+  node "Crear Rol"
+  node "Editar Rol"
+  node "Eliminar Rol"
+}
+
+Inicio --> Login
+Login --> "Olvidó su contraseña"
+Login --> "Menú Principal"
+
+"Menú Principal" --> "Crear Usuario"  
+"Menú Principal" --> "Editar Usuario" : si es administrador
+"Menú Principal" --> "Eliminar Usuario"  
+
+"Menú Principal" --> "Crear Rol"
+"Menú Principal" --> "Editar Rol" : si es administrador
+"Menú Principal" --> "Eliminar Rol" 
+@enduml

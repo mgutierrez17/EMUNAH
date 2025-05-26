@@ -3,8 +3,6 @@
     <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <p>MODO: {{ $modoLectura ? 'lectura' : 'formulario' }}</p>
-
     {{-- Mostrar botón de editar si ya existe empresa --}}
     @if ($modoLectura)
     <div class="form-element-list">
