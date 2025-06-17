@@ -124,3 +124,7 @@ Route::middleware([
 Route::get('/configuracion/empresa', function () {
     return view('modulos.configuracion.empresa');
 })->middleware(['auth']);
+
+Route::get('/listas_precios', function () {
+    return view('modulos.configuracion.listas_precios');
+})->name('listas_precios')->middleware(['auth']);

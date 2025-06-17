@@ -30,4 +30,9 @@ class Pedido extends Model
             ->withPivot('cantidad', 'precio_unitario', 'precio_total')
             ->withTimestamps();
     }
+
+    public function listaPrecio()
+    {
+        return $this->belongsTo(ListaPrecio::class);
+    }
 }

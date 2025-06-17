@@ -17,10 +17,16 @@ class ListaPrecio extends Model
 
     public function productos()
     {
+        return $this->hasMany(ListaPrecioProducto::class);
+        /*
         return $this->belongsToMany(Producto::class, 'lista_precios_productos')
             ->withPivot('precio')
             ->withTimestamps();
+            */
+    }
+
+    public function pedidos()
+    {
+        return $this->hasMany(Pedido::class);
     }
 }
-
-
