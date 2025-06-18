@@ -128,3 +128,7 @@ Route::get('/configuracion/empresa', function () {
 Route::get('/listas_precios', function () {
     return view('modulos.configuracion.listas_precios');
 })->name('listas_precios')->middleware(['auth']);
+
+Route::view('/configuracion/listas-precios', 'modulos.configuracion.listas_precios')->name('lista_precios.index');
+Route::get('/configuracion/lista-precios/ver/{id}', [ListaPrecioController::class, 'ver'])->name('lista_precios.ver');
+Route::get('/configuracion/lista-precios/editar/{id}', [ListaPrecioController::class, 'editar'])->name('lista_precios.editar');

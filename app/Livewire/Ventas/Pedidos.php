@@ -122,10 +122,21 @@ class Pedidos extends Component
     {
         $this->validate([
             'cliente_id' => 'required|exists:clientes,id',
+            'descripcion_pedido' => 'required|string|max:255',
             'fecha_pedido' => 'required|date',
             'productos' => 'required|array|min:1',
             'productos.*' => 'required|exists:productos,id',
             'cantidades.*' => 'required|integer|min:1',
+        ], [
+            'cliente_id.required' => 'Se debe seleccionar un cliente.',
+            'descripcion_pedido.required' => 'Debe ingresar una descripción para el pedido.',
+            'fecha_pedido.required' => 'La fecha del pedido es obligatoria.',
+            'productos.required' => 'Adicione productos al pedido.',
+            'productos.*.required' => 'Debe seleccionar productos para crear el pedido.',
+            'productos.*.exists' => 'Al menos un producto no es válido.',
+            'cantidades.*.required' => 'Debe indicar la cantidad de cada producto.',
+            'cantidades.*.integer' => 'Las cantidades deben ser números enteros.',
+            'cantidades.*.min' => 'La cantidad mínima debe ser al menos 1.',
         ]);
 
         DB::beginTransaction();
@@ -135,21 +146,41 @@ class Pedidos extends Component
                 ->whereDate('fecha_final', '>=', now())
                 ->firstOrFail();
 
-            $pedido = Pedido::create([
-                'cliente_id' => $this->cliente_id,
-                'descripcion_pedido' => $this->descripcion_pedido,
-                'fecha_registro' => $this->fecha_pedido,
-                'fecha_entrega' => $this->fecha_entrega,
-                'estado_pedido' => 'pedido',
-                'total_pedido' => $this->totalPedido,
-                'comentarios' => $this->comentarios,
-                'lista_precio_id' => $this->listaVigente->id,
-            ]);
+            // CREACIÓN O EDICIÓN
+            if ($this->modoEdicion && $this->pedido_id) {
+                $pedido = Pedido::findOrFail($this->pedido_id);
 
+                $pedido->update([
+                    'cliente_id' => $this->cliente_id,
+                    'descripcion_pedido' => $this->descripcion_pedido,
+                    'fecha_registro' => $this->fecha_pedido,
+                    'fecha_entrega' => $this->fecha_entrega,
+                    'estado_pedido' => 'pedido',
+                    'comentarios' => $this->comentarios,
+                    'lista_precio_id' => $lista->id,
+                    'total_pedido' => 0 // temporal
+                ]);
+
+                // Eliminar productos anteriores
+                $pedido->productos()->detach();
+            } else {
+                $pedido = Pedido::create([
+                    'cliente_id' => $this->cliente_id,
+                    'descripcion_pedido' => $this->descripcion_pedido,
+                    'fecha_registro' => $this->fecha_pedido,
+                    'fecha_entrega' => $this->fecha_entrega,
+                    'estado_pedido' => 'pedido',
+                    'comentarios' => $this->comentarios,
+                    'lista_precio_id' => $lista->id,
+                    'total_pedido' => 0 // temporal
+                ]);
+            }
+
+            // Agregar productos
             $total = 0;
             foreach ($this->productos as $i => $producto_id) {
                 $cantidad = $this->cantidades[$i];
-                $precio = $lista->productos()->find($producto_id)?->pivot?->precio ?? 0;
+                $precio = $this->precios[$i] ?? 0;
                 $subtotal = $cantidad * $precio;
 
                 $pedido->productos()->attach($producto_id, [
@@ -163,17 +194,19 @@ class Pedidos extends Component
 
             $pedido->update(['total_pedido' => $total]);
 
-            $this->reset(['cliente_id', 'productos', 'cantidades', 'fecha_pedido', 'crearFormulario']);
-            session()->flash('success', 'Pedido registrado correctamente.');
             DB::commit();
+
+            // Resetear formulario
+            $this->resetForm();
+            $this->crearFormulario = false;
+            $this->modoEdicion = false;
+            session()->flash('success', $this->modoEdicion ? 'Pedido actualizado.' : 'Pedido registrado correctamente.');
         } catch (\Throwable $e) {
             DB::rollBack();
             session()->flash('error', 'Error: ' . $e->getMessage());
         }
-        $this->resetForm();
-        $this->crearFormulario = false;
-        session()->flash('success', 'Pedido creado exitosamente.');
     }
+
 
     public function cancelar()
     {
